@@ -1,0 +1,23 @@
+/* Write a PL/SQL block that find 
+	1.Area of circle(pi*radius*radius)
+*/
+
+SET SERVEROUTPUT ON
+SET VERIFY OFF
+SET FEEDBACK OFF
+
+DECLARE
+	PI NUMBER(7,2):=3.14;
+	RADIUS NUMBER(5);
+	AREA NUMBER(9,2);
+
+BEGIN
+	RADIUS:=&RADIUS;
+	AREA:=PI*(POWER(RADIUS,2));
+	DBMS_OUTPUT.PUT_LINE('The value of Area is : ' || AREA);
+
+END;
+/
+SET SERVEROUTPUT OFF
+SET VERIFY ON
+SET FEEDBACK ON
