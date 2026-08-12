@@ -18,12 +18,10 @@ BEGIN
     R := &R;
     T := &T;
 
-    -- Calculate Simple Interest
     SI := (P * R * T) / 100;
-
-    -- Calculate Total Amount
     AMOUNT := P + SI;
 
+   DBMS_OUTPUT.PUT_LINE('========================');
     DBMS_OUTPUT.PUT_LINE('Principal Amount : ' || P);
     DBMS_OUTPUT.PUT_LINE('Rate of Interest : ' || R || '%');
     DBMS_OUTPUT.PUT_LINE('Number of Years  : ' || T);
