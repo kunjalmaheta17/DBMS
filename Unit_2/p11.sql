@@ -2,6 +2,10 @@
 Write a simple procedure that increases by the salary of employees for the given department no. by percentage inputted by the user using IN parameter. Also handle the exception if inputted department number not found.
 */
 
+SET SERVEROUTPUT ON
+SET VERIFY OFF
+SET FEEDBACK OFF
+
 CREATE OR REPLACE PROCEDURE increase_salary (
     p_deptno  IN NUMBER,
     p_percent IN NUMBER
@@ -37,6 +41,9 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
 END;
 /
+SET SERVEROUTPUT OFF
+SET VERIFY ON
+SET FEEDBACK ON
 
 
 /*

@@ -6,6 +6,9 @@ variables) and also Write a PL/SQL block to call the SEARCH_EMP
 procedure.
 */
 
+SET SERVEROUTPUT ON
+SET VERIFY OFF
+SET FEEDBACK OFF
 
 CREATE OR REPLACE PROCEDURE SEARCH_EMP (
     P_EID       IN NUMBER,
@@ -32,7 +35,9 @@ EXCEPTION
 END;
 /
 
-
+SET SERVEROUTPUT OFF
+SET VERIFY ON
+SET FEEDBACK ON
 
 /*
 TO run this program :-
