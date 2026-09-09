@@ -20,7 +20,7 @@ AS
     PROCEDURE greet
     IS
     BEGIN
-        DBMS_OUTPUT.PUT_LINE('Hello World');
+        DBMS_OUTPUT.PUT_LINE('Package successfullly created..');
     END greet;
 END my_package;
 /

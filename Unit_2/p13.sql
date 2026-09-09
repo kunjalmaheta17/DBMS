@@ -34,6 +34,7 @@ SET FEEDBACK ON
 /*
 To run this program:-
 1) @ D:\92600584022\DBMS\Unit_2\p13.sql
+2)  SET SERVEROUTPUT ON;
 2) VARIABLE v_eid NUMBER;
 3) EXEC :v_eid := 102;
 4) EXEC REMOVE_EMPLOYEE(:v_eid);

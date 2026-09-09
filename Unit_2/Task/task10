@@ -1,0 +1,44 @@
+/*
+Create a function that returns employee experience category based 
+on joining date. 
+Categories: 
+ Less than 2 Years → Fresher  
+ 2–5 Years → Experienced  
+ More than 5 Years → Senior Employee 
+*/
+
+
+CREATE OR REPLACE FUNCTION GET_EXPERIENCE
+(
+    P_EMPNO NUMBER
+)
+RETURN VARCHAR2
+IS
+    V_HIREDATE DATE;
+    V_YEARS NUMBER;
+BEGIN
+    SELECT HIREDATE
+    INTO V_HIREDATE
+    FROM EMP
+    WHERE EMPNO = P_EMPNO;
+
+    V_YEARS := MONTHS_BETWEEN(SYSDATE, V_HIREDATE) / 12;
+
+    IF V_YEARS < 2 THEN
+        RETURN ' Fresher';
+
+    ELSIF V_YEARS <= 5 THEN
+        RETURN ' Experienced';
+
+    ELSE
+        RETURN ' Senior Employee';
+    END IF;
+
+END GET_EXPERIENCE;
+/
+
+SELECT EMPNO,
+       ENAME,
+       HIREDATE,
+       GET_EXPERIENCE(EMPNO) AS EXPERIENCE
+FROM EMP;
