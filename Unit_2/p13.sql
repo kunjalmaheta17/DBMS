@@ -31,6 +31,10 @@ END;
 SET SERVEROUTPUT OFF
 SET VERIFY ON
 SET FEEDBACK ON
+
+
+
+
 /*
 To run this program:-
 1) @ D:\92600584022\DBMS\Unit_2\p13.sql

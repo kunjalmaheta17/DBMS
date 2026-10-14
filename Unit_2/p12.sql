@@ -39,18 +39,22 @@ SET SERVEROUTPUT OFF
 SET VERIFY ON
 SET FEEDBACK ON
 
-/*
-TO run this program :-
 
+/*
+Command line :-
+1) @D:\92600584022\DBMS\Unit_2\p12_plsql.sql
+*/
+
+/*
 1)create global variables:
 	VARIABLE v_eid NUMBER;
 	VARIABLE v_ename VARCHAR2(30);
 	VARIABLE v_salary NUMBER;
 	VARIABLE v_deptno NUMBER;
 2)Enter employee ID:
-	EXEC :v_eid := 101;
-3)Call the procedure:
+	EXEC :v_eid := 107;
+3)@ D:\92600584022\DBMS\Unit_2\p12_plsql.sql	
+4)Call the procedure:
 	EXEC SEARCH_EMP(:v_eid, :v_ename, :v_salary, :v_deptno);
-4)@ D:\92600584022\DBMS\Unit_2\p12_plsql.sql
-	
+
 */

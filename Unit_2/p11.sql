@@ -45,6 +45,13 @@ SET SERVEROUTPUT OFF
 SET VERIFY ON
 SET FEEDBACK ON
 
+/*
+Command line excecution:-
+1)@D:\92600584022\DBMS\Unit_2\p11.sql
+2)SET SERVEROUTPUT ON
+3)EXEC increase_salary(10, 10);
+4)select * from emp;
+*/
 
 /*
 To run this program:
