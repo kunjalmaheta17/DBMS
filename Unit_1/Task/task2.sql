@@ -7,99 +7,75 @@ Number and:
  Displays Pass/Fail status (Pass if all subjects ≥35).
 */
 
-CREATE TABLE STUDENT
-(
-    ROLLNO NUMBER(5),
-    STUDENT_NAME VARCHAR2(20),
-    SUB1 NUMBER(7),
-    SUB2 NUMBER(7),
-    SUB3 NUMBER(7),
-    SUB4 NUMBER(7),
-    SUB5 NUMBER(7),
-    TOTAL NUMBER(7),
-    PERCENTAGE NUMBER(7,2),
-    GRADE VARCHAR2(20),
-    FINAL_STATUS VARCHAR2(20)
+CREATE TABLE STUDENT (
+    ROLL_NO NUMBER PRIMARY KEY,
+    NAME VARCHAR2(50),
+    MARK1 NUMBER,
+    MARK2 NUMBER,
+    MARK3 NUMBER,
+    TOTAL NUMBER,
+    PERCENTAGE NUMBER(5,2),
+    GRADE CHAR(1),
+    STATUS VARCHAR2(10)
 );
 
-INSERT INTO STUDENT
-(ROLLNO, STUDENT_NAME, SUB1, SUB2, SUB3, SUB4, SUB5)
-VALUES
-(1, 'KUNJAL', 80, 75, 90, 85, 70);
+INSERT INTO STUDENT (ROLL_NO, NAME, MARK1, MARK2, MARK3)
+VALUES (101, 'Rahul', 80, 70, 90);
 
-INSERT INTO STUDENT
-(ROLLNO, STUDENT_NAME, SUB1, SUB2, SUB3, SUB4, SUB5)
-VALUES
-(2, 'DEV', 90,80, 90, 85, 75);
+COMMIT;
 
-INSERT INTO STUDENT
-(ROLLNO, STUDENT_NAME, SUB1, SUB2, SUB3, SUB4, SUB5)
-VALUES
-(3, 'MOIN', 30, 25, 0, 55, 54);
-
-
-SET SERVEROUTPUT ON
-SET VERIFY OFF
-SET FEEDBACK OFF
-
+SET SERVEROUTPUT ON;
 
 DECLARE
-	V_ROLLNO	RESULT.ROLLNO%TYPE;
-	V_NAME		RESULT.NAME%TYPE;
-	V_SUB1		RESULT.SUB1%TYPE;
-	V_SUB2		RESULT.SUB2%TYPE;
-	V_SUB3		RESULT.SUB3%TYPE;
-	V_SUB4		RESULT.SUB4%TYPE;
-	V_SUB5		RESULT.SUB5%TYPE;
-
-	V_TOTAL		RESULT.TOTAL%TYPE;
-	V_PER		RESULT.PER%TYPE;
-	V_GRADE		RESULT.GRADE%TYPE;
-	
+    v_roll       NUMBER := &ROLL_NO;
+    v_mark1      NUMBER;
+    v_mark2      NUMBER;
+    v_mark3      NUMBER;
+    v_total      NUMBER;
+    v_percentage NUMBER;
+    v_grade      CHAR(1);
+    v_status     VARCHAR2(10);
 BEGIN
-	V_ROLLNO:=&V_ROLLNO;
-	
-	SELECT ROLLNO,NAME,SUB1,SUB2,SUB3,SUB4,SUB5 INTO V_ROLLNO,V_NAME,V_SUB1,V_SUB2,V_SUB3,V_SUB4,V_SUB5 FROM RESULT WHERE ROLLNO=V_ROLLNO;
+ 
+    SELECT MARK1, MARK2, MARK3
+    INTO v_mark1, v_mark2, v_mark3
+    FROM STUDENT
+    WHERE ROLL_NO = v_roll;
 
-	V_TOTAL:=V_SUB1+V_SUB2+V_SUB3+V_SUB4+V_SUB5;
-	V_PER:=V_TOTAL/5;
-	
-	IF (V_PER>=70) THEN
-		V_GRADE:='DISTINCTION';
-	ELSIF (V_PER>=60 AND V_PER<70) THEN
-		V_GRADE:='FIRST CLASS';
-	ELSIF (V_PER>=50 AND V_PER<60) THEN
-		V_GRADE:='SECOND CLASS';
-	ELSIF (V_PER>=40 AND V_PER<50) THEN
-		V_GRADE:='PASS CLASS';
-	ELSE
-		V_GRADE:='FAIL';
-	END IF;
-	
-	DBMS_OUTPUT.PUT_LINE('--------------------RESULT--------------------');
-	DBMS_OUTPUT.PUT_LINE('ROLLNO: - '||V_ROLLNO);
-	DBMS_OUTPUT.PUT_LINE('NAME: - '||V_NAME);
-	DBMS_OUTPUT.PUT_LINE('MARKS OF SUB1: - '||V_SUB1);
-	DBMS_OUTPUT.PUT_LINE('MARKS OF SUB2: - '||V_SUB2);
-	DBMS_OUTPUT.PUT_LINE('MARKS OF SUB3: - '||V_SUB3);
-	DBMS_OUTPUT.PUT_LINE('MARKS OF SUB4: - '||V_SUB4);
-	DBMS_OUTPUT.PUT_LINE('MARKS OF SUB5: - '||V_SUB5);
-	DBMS_OUTPUT.PUT_LINE('----------------------------');
-	DBMS_OUTPUT.PUT_LINE('TOTAL MARKS: - '||V_TOTAL);
-	DBMS_OUTPUT.PUT_LINE('PERCENTAGE %: - '||V_PER);
-	DBMS_OUTPUT.PUT_LINE('FINAL GRADE: - '||V_GRADE);
-	DBMS_OUTPUT.PUT_LINE('----------------------------');
-	
-	UPDATE RESULT SET TOTAL=V_TOTAL, PER=V_PER, GRADE=V_GRADE WHERE ROLLNO=V_ROLLNO;
-	DBMS_OUTPUT.PUT_LINE('Result is updated for rollno: -'||V_ROLLNO);
-	
+ 
+    v_total := v_mark1 + v_mark2 + v_mark3;
+
+    v_percentage := v_total / 3;
+
+    IF v_mark1 >= 35
+       AND v_mark2 >= 35
+       AND v_mark3 >= 35 THEN
+        v_status := 'PASS';
+    ELSE
+        v_status := 'FAIL';
+    END IF;
+
+    IF v_status = 'FAIL' THEN
+        v_grade := 'F';
+    ELSIF v_percentage >= 75 THEN
+        v_grade := 'A';
+    ELSIF v_percentage >= 60 THEN
+        v_grade := 'B';
+    ELSIF v_percentage >= 50 THEN
+        v_grade := 'C';
+    ELSE
+        v_grade := 'D';
+    END IF;
+
+
+    DBMS_OUTPUT.PUT_LINE('Roll Number : ' || v_roll);
+    DBMS_OUTPUT.PUT_LINE('Total       : ' || v_total);
+    DBMS_OUTPUT.PUT_LINE('Percentage  : ' || v_percentage || '%');
+    DBMS_OUTPUT.PUT_LINE('Grade       : ' || v_grade);
+    DBMS_OUTPUT.PUT_LINE('Status      : ' || v_status);
+
 EXCEPTION
-	WHEN NO_DATA_FOUND THEN
-		DBMS_OUTPUT.PUT_LINE('The student with provided rollno does not exist enter proper rollno');
-
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('Roll Number not found.');
 END;
 /
-SET SERVEROUTPUT OFF
-SET VERIFY ON
-SET FEEDBACK ON
-
